@@ -60,6 +60,6 @@ io.on("connection", (socket) => {
 //   otherProperty: "other value",
 // });
 
-server.listen(3001, () => {
-  console.log("listening on 3001");
+server.listen(3003, () => {
+  console.log("listening on 3003");
 });

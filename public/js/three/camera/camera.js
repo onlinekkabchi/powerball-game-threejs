@@ -15,7 +15,7 @@ const camera = new THREE.OrthographicCamera(
   -200,
   500 // 카메라 거리
 );
-camera.position.set(0, 5, 10);
+camera.position.set(0, 1, 10);
 // camera.lookAt(0, 0, 0);
 
 // 카메라 궤도 컨트롤러
@@ -25,7 +25,7 @@ function orbitController(camera, renderer) {
   // controls.maxDistance = 100;
   // controls.maxPolarAngle = Math.PI / 2;
 
-  controls.target.set(0, 5, 0);
+  controls.target.set(0, 0, 0); // 시작시점
   // 줌 비활성화
   // controls.enableZoom = false;
   // 회전 비활성화
