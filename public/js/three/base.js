@@ -9,6 +9,9 @@ import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
 import { BloomPass } from "three/addons/postprocessing/BloomPass.js";
+import { FilmPass } from "three/addons/postprocessing/FilmPass.js";
+import { FocusShader } from "three/addons/shaders/FocusShader.js";
+// import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 
 // threejs 인스턴스
 // import { gridHelper, axesHelper } from "./helper/helper.js";
@@ -146,6 +149,14 @@ function init() {
 
   mesh = new THREE.Mesh(meshGeometry, meshMaterial);
   mesh.position.set(0, 0, -130);
+
+  // 테스트 스피어
+  const sphereGeometry = new THREE.SphereGeometry(60, 32, 16);
+  const sphere = new THREE.Mesh(sphereGeometry, glassMat);
+  // sphere.material = glassMat;
+  sphere.position.set(-200, 10, 0);
+  scene.add(sphere);
+
   // scene.add(mesh);
 
   // window.addEventListener( 'resize', onWindowResize );
