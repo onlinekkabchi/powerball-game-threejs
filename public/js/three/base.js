@@ -4,11 +4,11 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { FBXLoader } from "three/addons/loaders/FBXLoader.js";
 
-// 이펙트
+// 컴포저
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
-// import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
+import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
+import { BloomPass } from "three/addons/postprocessing/BloomPass.js";
 
 // threejs 인스턴스
 // import { gridHelper, axesHelper } from "./helper/helper.js";
@@ -115,6 +115,7 @@ function init() {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight * 0.7); // 캔버스 사이즈
   renderer.toneMapping = THREE.ReinhardToneMapping;
+  // renderer.toneMapping = THREE.CineonToneMapping;
 
   document.body.appendChild(renderer.domElement);
 
@@ -132,26 +133,6 @@ function init() {
     // dirLightHelper, hemiLightHelper
   );
   scene.add(pointLight, pointLightHelper, pointLight2, pointLightHelper2);
-
-  // 블룸효과
-  const renderScene = new RenderPass(scene, camera);
-  const bloomPass = new UnrealBloomPass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
-    1.5,
-    0.4,
-    0.85
-  );
-  bloomPass.threshold = 0;
-  bloomPass.strength = 1;
-  bloomPass.radius = 1;
-
-  // const outputPass = new OutputPass();
-
-  composer = new EffectComposer(renderer);
-  composer.addPass(renderScene);
-  composer.addPass(bloomPass);
-  // composer.addPass(outputPass);
-  // composer.setSize(window.innerWidth, window.innerHeight * 0.7);
 
   // 테스트 박스
   const meshGeometry = new THREE.BoxGeometry(200, 250, 100);
@@ -250,7 +231,7 @@ function init() {
     lotterySample.children[1].material = transparentMat;
     lotterySample.children[2].material = transparentMat;
 
-    for (let i = 3; i < lotterySample.children.length - 1; i++) {
+    for (let i = 3; i < lotterySample.children.length; i++) {
       const element = lotterySample.children[i];
       element.material = ballMat;
     }
@@ -299,32 +280,33 @@ function init() {
   });
 
   // 폭죽
-  // const fireworkPath = "./static/model/firework/scene.gltf";
-  // loader.load(
-  //   fireworkPath,
-  //   function (gltf) {
-  //     firework = gltf.scene;
+  const fireworkPath = "./static/model/firework/scene.gltf";
+  loader.load(
+    fireworkPath,
+    function (gltf) {
+      firework = gltf.scene;
 
-  //     console.log("firework");
-  //     console.log(gltf);
-  //     firework.position.set(0, 80, 0);
-  //     firework.scale.set(8, 8, 8);
+      console.log("firework");
+      console.log(gltf);
 
-  //     scene.add(firework);
+      firework.position.set(0, 90, 0);
+      firework.scale.set(10, 10, 10);
 
-  //     // 폭죽 애니메이션
-  //     const fireAnimations = gltf.animations;
-  //     fireworkMixer = new THREE.AnimationMixer(firework);
-  //     fireworkMixer.clipAction(fireAnimations[0]).play();
-  //     console.log(fireworkMixer.clipAction(fireAnimations[0]));
+      scene.add(firework);
 
-  //     // animate();
-  //   },
-  //   undefined,
-  //   function (err) {
-  //     console.error(err);
-  //   }
-  // );
+      // 폭죽 애니메이션
+      const fireAnimations = gltf.animations;
+      fireworkMixer = new THREE.AnimationMixer(firework);
+      fireworkMixer.clipAction(fireAnimations[0]).play();
+      console.log(fireworkMixer.clipAction(fireAnimations[0]));
+
+      // animate();
+    },
+    undefined,
+    function (err) {
+      console.error(err);
+    }
+  );
 
   // 스톰트루퍼
   const trupperPath = "./static/model/dancing_stormtrooper/scene.gltf";
@@ -368,9 +350,9 @@ function animate() {
   // console.log(mixerUpdateDelta);
   // console.log(mixer);
 
-  // if (fireworkMixer) {
-  //   fireworkMixer.update(mixerUpdateDelta);
-  // }
+  if (fireworkMixer) {
+    fireworkMixer.update(mixerUpdateDelta);
+  }
 
   if (ringMixer) {
     ringMixer.update(mixerUpdateDelta);
@@ -406,7 +388,6 @@ function animate() {
   //   }
   // }
 
-  composer.render();
   render();
 }
 
