@@ -3,10 +3,15 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { FBXLoader } from "three/addons/loaders/FBXLoader.js";
+import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
 
 // 이펙트
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
+import { BloomPass } from "three/addons/postprocessing/BloomPass.js";
+import { FilmPass } from "three/addons/postprocessing/FilmPass.js";
+import { FocusShader } from "three/addons/shaders/FocusShader.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 // import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 
@@ -45,9 +50,12 @@ import {
 // // 텍스쳐
 // import { hdrLoader } from "./camera/hdr.js";
 import { glassMat, transparentMat } from "./texture/glass.js";
+import { ballMat } from "./texture/lottery-ball.js";
 
 const loader = new GLTFLoader();
+const rgbeLoader = new RGBELoader();
 const fbxLoader = new FBXLoader();
+const objLoader = new OBJLoader();
 const clock = new THREE.Clock();
 
 let animationStartTime = null;
@@ -87,7 +95,7 @@ let ballController = {
 init();
 
 function init() {
-  console.log("scene");
+  console.log("init function start");
 
   scene = new THREE.Scene();
   // scene.background = new THREE.Color(0xebebeb);
@@ -114,7 +122,9 @@ function init() {
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight * 0.7); // 캔버스 사이즈
-  renderer.toneMapping = THREE.ReinhardToneMapping;
+  // renderer.toneMapping = THREE.ReinhardToneMapping;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  // renderer.toneMapping = THREE.CineonToneMapping;
 
   document.body.appendChild(renderer.domElement);
 
@@ -125,6 +135,7 @@ function init() {
   controls.maxPolarAngle = Math.PI / 2;
   // controls.enableRotate = false;
 
+  // 빛 추가
   scene.add(
     ambientLight,
     dirLight,
@@ -132,6 +143,15 @@ function init() {
     // dirLightHelper, hemiLightHelper
   );
   scene.add(pointLight, pointLightHelper, pointLight2, pointLightHelper2);
+
+  // 안개 추가
+  // Create a fog with the desired color and initial density
+  const fogColor = 0x000104;
+  const fogDensity = 0.003;
+  const fog = new THREE.FogExp2(fogColor, fogDensity);
+
+  // Assign the fog to the scene
+  scene.fog = fog;
 
   // 블룸효과
   const renderScene = new RenderPass(scene, camera);
@@ -144,6 +164,7 @@ function init() {
   bloomPass.threshold = 0;
   bloomPass.strength = 1;
   bloomPass.radius = 1;
+  // const bloomPass = new BloomPass(0.75);
 
   // const outputPass = new OutputPass();
 
@@ -152,6 +173,16 @@ function init() {
   composer.addPass(bloomPass);
   // composer.addPass(outputPass);
   // composer.setSize(window.innerWidth, window.innerHeight * 0.7);
+
+  // 테스트 알
+  const eggPath = "../../../static/model/egg/egg.obj";
+  objLoader.load(eggPath, function (obj) {
+    // const positions = combineBuffer(obj, "position");
+    // createMesh(positions, scene, 4.05, -500, -350, 600, 0xff7744);
+    // createMesh(positions, scene, 4.05, 500, -350, 0, 0xff5522);
+    // createMesh(positions, scene, 4.05, -250, -350, 1500, 0xff9922);
+    // createMesh(positions, scene, 4.05, -250, -350, -1500, 0xff99ff);
+  });
 
   // 테스트 박스
   const meshGeometry = new THREE.BoxGeometry(200, 250, 100);
@@ -167,6 +198,12 @@ function init() {
   mesh.position.set(0, 0, -130);
   // scene.add(mesh);
 
+  // 테스트 스피어
+  const sphereGeometry = new THREE.SphereGeometry(90, 32, 32);
+  const testSphere = new THREE.Mesh(sphereGeometry, glassMat);
+  testSphere.position.set(-300, 0, 0); // x: -180
+  scene.add(testSphere);
+
   // window.addEventListener( 'resize', onWindowResize );
 
   // 전체 배경
@@ -177,8 +214,9 @@ function init() {
   // const hdrPath = "../../../static/background/milky-way-1.hdr";
   // const hdrPath = "../../../static/background/night-city-2.hdr";
   const hdrPath = "../../../static/background/green-galaxy-1.hdr";
+  // const hdrPath = "../../../static/background/space-green-1.hdr";
 
-  new RGBELoader().load(hdrPath, function (texture) {
+  rgbeLoader.load(hdrPath, function (texture) {
     scene.background = texture;
     // scene.environment = texture;
   });
@@ -189,7 +227,7 @@ function init() {
     function (gltf) {
       const model = gltf.scene;
       model.position.set(0, -130, 20);
-      model.scale.set(30, 25, 30); // orthographic 카메라 사용할때 크기 주의할것
+      model.scale.set(40, 40, 40); // orthographic 카메라 사용할때 크기 주의할것
       scene.add(model);
     },
     function (xhr) {
@@ -204,14 +242,7 @@ function init() {
   const lotteryPath =
     "./static/model/lottery-machine-remake/simulation-to-mesh-1.gltf";
   const ballGeometry = new THREE.SphereGeometry(10, 32, 32);
-  const ballMat = new THREE.MeshPhysicalMaterial({
-    color: 0xff7900,
-    metalness: 0.9,
-    roughness: 0,
-    clearcoat: 1,
-    // emissive: 0xffffff,
-    // emissiveIntensity: 1,
-  });
+
   loader.load(lotteryPath, function (gltf) {
     lottery = gltf.scene;
 
@@ -257,8 +288,8 @@ function init() {
 
     // lotterySample.children.forEach((el) => (el.material = ballMat));
 
-    lotterySample.position.set(0, 10, 0);
-    lotterySample.scale.set(20, 20, 20);
+    lotterySample.position.set(0, 60, 0);
+    lotterySample.scale.set(30, 30, 30);
     // lotterySample.rotation.y += 90;
     scene.add(lotterySample);
 
@@ -286,7 +317,7 @@ function init() {
     console.log("ring");
     console.log(gltf);
     ring.position.set(0, -130, 0);
-    ring.scale.set(25, 25, 25);
+    ring.scale.set(30, 30, 30);
 
     scene.add(ring);
 
@@ -335,8 +366,8 @@ function init() {
 
       console.log("trupper");
       console.log(gltf);
-      trupper.position.set(130, -130, 0);
-      trupper.scale.set(30, 30, 30);
+      trupper.position.set(250, -100, 30);
+      trupper.scale.set(50, 50, 50);
 
       scene.add(trupper);
 

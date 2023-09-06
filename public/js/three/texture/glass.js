@@ -18,19 +18,20 @@ import { hdrLoader } from "../camera/hdr.js";
 //   // emissiveIntensity: 0.1,
 // });
 const glassMat = new THREE.MeshPhysicalMaterial({
-  color: 0xffffff,
+  // color: 0xffffff,
   // metalness: 0,
   roughness: 0,
   clearcoat: 1,
-  // transmission: 1,
+  transmission: 1, // 값을 올릴 경우 화면 톤전체가 엄청 밝아짐
   transparent: true,
-  // opacity: 0.5,
-  // reflectivity: 0.1,
+  opacity: 0.5,
+  reflectivity: 1,
   // refractionRatio: 0.9,
   ior: 2.33,
   envMap: hdrLoader,
   envMapIntensity: 1,
-  opacity: 0.3,
+  opacity: 1,
+  side: THREE.BackSide,
 });
 const transparentMat = new THREE.MeshBasicMaterial({
   transparent: true,
