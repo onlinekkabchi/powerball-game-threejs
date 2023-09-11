@@ -42,7 +42,7 @@ ambientLight.intensity = 3;
 const dirLight = new THREE.DirectionalLight(light.veryLightYellow);
 dirLight.position.set(0, 250, 0);
 dirLight.scale.set(100, 50, 100);
-dirLight.intensity = 1;
+dirLight.intensity = 2;
 
 const dirLightHelper = new THREE.DirectionalLightHelper(dirLight, 10);
 
