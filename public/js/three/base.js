@@ -53,7 +53,8 @@ import { glassMat, transparentMat } from "./texture/glass.js";
 import {
   ballMatGreen,
   ballMatYellow,
-  ballMatOrange,
+  ballMatBlue,
+  ballMatRed,
 } from "./texture/lottery-ball.js";
 
 const loader = new GLTFLoader();
@@ -260,10 +261,10 @@ function init() {
     console.log("lottery machine");
     console.log(gltf);
 
-    lottery.children[0].material = ballMatOrange;
+    lottery.children[0].material = ballMatBlue;
     lottery.children[1].material = ballMatGreen;
     lottery.children[2].material = ballMatYellow;
-    lottery.children[3].material = ballMatOrange;
+    lottery.children[3].material = ballMatBlue;
 
     lottery.children[4].material = glassMat;
 
@@ -287,7 +288,7 @@ function init() {
   // 샘플 로터리 머신
   // const lotterySamplePath = "./static/model/simulation/emitter-final-3.gltf";
   const lotterySamplePath =
-    "./static/model/lottery-machine-remake/tester-3/lottery-machine-rigid-7.gltf";
+    "./static/model/lottery-machine-remake/tester-3/lottery-machine-rigid-12.gltf";
   loader.load(lotterySamplePath, function (gltf) {
     lotterySample = gltf.scene;
 
@@ -299,15 +300,21 @@ function init() {
 
     lotterySample.children[3].material = ballMatGreen;
     // lotterySample.children[3].material = ballMatGreen;
-    lotterySample.children[4].material = ballMatYellow;
-    lotterySample.children[5].material = ballMatOrange;
-    lotterySample.children[6].material = ballMatOrange;
-    lotterySample.children[7].material = ballMatOrange;
+    lotterySample.children[4].material = ballMatRed;
+    lotterySample.children[5].material = ballMatBlue;
+    lotterySample.children[6].material = ballMatBlue;
+    lotterySample.children[7].material = ballMatBlue;
     lotterySample.children[8].material = ballMatYellow;
-    lotterySample.children[9].material = ballMatOrange;
+    lotterySample.children[9].material = ballMatBlue;
     lotterySample.children[10].material = ballMatYellow;
     // lotterySample.children[11].material = ballMatYellow;
-    // lotterySample.children[12].material = ballMatYellow;
+    lotterySample.children[12].material = ballMatYellow;
+    lotterySample.children[13].material = ballMatYellow;
+    lotterySample.children[14].material = ballMatGreen;
+    lotterySample.children[15].material = ballMatGreen;
+    lotterySample.children[16].material = ballMatGreen;
+    lotterySample.children[17].material = ballMatRed;
+    lotterySample.children[18].material = ballMatRed;
 
     // for (let i = 6; i < lotterySample.children.length; i++) {
     //   const element = lotterySample.children[i];
@@ -437,7 +444,7 @@ function animate() {
 
   if (isRingAnimationPlaying) {
     //   ringAction.play();
-    lotterySampleMixer.update(mixerUpdateDelta * 3);
+    lotterySampleMixer.update(mixerUpdateDelta * 1.5);
     lotteryMixer.update(mixerUpdateDelta);
   }
 
