@@ -128,8 +128,8 @@ function init() {
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight * 0.7); // 캔버스 사이즈
-  // renderer.toneMapping = THREE.ReinhardToneMapping;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMapping = THREE.ReinhardToneMapping;
+  // renderer.toneMapping = THREE.ACESFilmicToneMapping;
   // renderer.toneMapping = THREE.CineonToneMapping;
 
   document.body.appendChild(renderer.domElement);
@@ -149,7 +149,11 @@ function init() {
     hemiLight
     // dirLightHelper, hemiLightHelper
   );
-  scene.add(pointLight, pointLightHelper, pointLight2, pointLightHelper2);
+  scene.add(
+    pointLight,
+    pointLightHelper
+    // pointLight2, pointLightHelper2
+  );
 
   // 안개 추가
   // Create a fog with the desired color and initial density
@@ -283,17 +287,17 @@ function init() {
   // 샘플 로터리 머신
   // const lotterySamplePath = "./static/model/simulation/emitter-final-3.gltf";
   const lotterySamplePath =
-    "./static/model/lottery-machine-remake/tester-3/lottery-machine-rigid-5.gltf";
+    "./static/model/lottery-machine-remake/tester-3/lottery-machine-rigid-7.gltf";
   loader.load(lotterySamplePath, function (gltf) {
     lotterySample = gltf.scene;
 
     console.log("lottery machine sample");
     console.log(gltf);
 
-    lotterySample.children[3].material = transparentMat;
-    lotterySample.children[12].material = glassMat;
+    lotterySample.children[2].material = transparentMat;
+    lotterySample.children[11].material = glassMat;
 
-    lotterySample.children[2].material = ballMatGreen;
+    lotterySample.children[3].material = ballMatGreen;
     // lotterySample.children[3].material = ballMatGreen;
     lotterySample.children[4].material = ballMatYellow;
     lotterySample.children[5].material = ballMatOrange;
@@ -302,7 +306,7 @@ function init() {
     lotterySample.children[8].material = ballMatYellow;
     lotterySample.children[9].material = ballMatOrange;
     lotterySample.children[10].material = ballMatYellow;
-    lotterySample.children[11].material = ballMatYellow;
+    // lotterySample.children[11].material = ballMatYellow;
     // lotterySample.children[12].material = ballMatYellow;
 
     // for (let i = 6; i < lotterySample.children.length; i++) {
