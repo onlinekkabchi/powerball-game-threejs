@@ -1,4 +1,5 @@
 ﻿import * as THREE from "three";
+// import * as POSTPROCESSING from ""
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
@@ -8,10 +9,10 @@ import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
 // 이펙트
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
-import { BloomPass } from "three/addons/postprocessing/BloomPass.js";
-import { FilmPass } from "three/addons/postprocessing/FilmPass.js";
-import { FocusShader } from "three/addons/shaders/FocusShader.js";
+// import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
+// import { BloomPass } from "three/addons/postprocessing/BloomPass.js";
+// import { FilmPass } from "three/addons/postprocessing/FilmPass.js";
+// import { FocusShader } from "three/addons/shaders/FocusShader.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 // import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 
@@ -180,12 +181,17 @@ function init() {
 
   // const outputPass = new OutputPass();
 
+  // 보정
   composer = new EffectComposer(renderer);
 
   composer.addPass(renderScene);
   composer.addPass(bloomPass);
   console.log("composer");
   console.log(composer);
+  console.log(renderScene);
+  console.log(bloomPass);
+  // console.log(outputPass);
+
   // composer.addPass(outputPass);
   // composer.setSize(window.innerWidth, window.innerHeight * 0.7);
 
@@ -288,7 +294,7 @@ function init() {
   // 샘플 로터리 머신
   // const lotterySamplePath = "./static/model/simulation/emitter-final-3.gltf";
   const lotterySamplePath =
-    "./static/model/lottery-machine-remake/tester-3/lottery-machine-rigid-12.gltf";
+    "./static/model/lottery-machine-remake/tester-3/lottery-machine-wind-2.gltf";
   loader.load(lotterySamplePath, function (gltf) {
     lotterySample = gltf.scene;
 
@@ -444,7 +450,7 @@ function animate() {
 
   if (isRingAnimationPlaying) {
     //   ringAction.play();
-    lotterySampleMixer.update(mixerUpdateDelta * 1.5);
+    lotterySampleMixer.update(mixerUpdateDelta * 1.8);
     lotteryMixer.update(mixerUpdateDelta);
   }
 
