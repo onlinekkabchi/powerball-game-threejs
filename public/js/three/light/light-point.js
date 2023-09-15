@@ -10,7 +10,7 @@ const pointLightHelper = new THREE.PointLightHelper(pointLight, 20);
 pointLight.position.set(0, 300, 0);
 pointLight.lookAt(0, 0, 0);
 pointLight.castShadow = true;
-pointLight.intensity = 10;
+pointLight.intensity = 500;
 
 // 보라색
 const pointLight2 = new THREE.PointLight(0x81007f, 400);

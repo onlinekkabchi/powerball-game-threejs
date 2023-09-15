@@ -11,7 +11,7 @@ const ballMatGreen = new THREE.MeshPhysicalMaterial({
   color: 0x006b3d,
   metalness: 0.9,
   roughness: 0.1,
-  clearcoat: 1,
+  // clearcoat: 1,
   emissive: 0xffffff,
   emissiveIntensity: 0.1,
 });
@@ -20,7 +20,7 @@ const ballMatYellow = new THREE.MeshPhysicalMaterial({
   color: 0xfdcc0c,
   metalness: 0.9,
   roughness: 0.1,
-  clearcoat: 1,
+  // clearcoat: 1,
   emissive: 0xffffff,
   emissiveIntensity: 0.1,
 });
@@ -36,7 +36,7 @@ const ballMatRed = new THREE.MeshPhysicalMaterial({
   color: 0xa11c0f,
   metalness: 0.9,
   roughness: 0.1,
-  clearcoat: 1,
+  // clearcoat: 1,
   emissive: 0xffffff,
   emissiveIntensity: 0.1,
 });
