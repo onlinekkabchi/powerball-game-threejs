@@ -50,7 +50,7 @@ function stage(scene) {
       });
 
       model.position.set(0, 0, 0);
-      model.scale.set(1, 1, 1);
+      model.scale.set(10, 10, 10);
       scene.add(model);
     },
     function (xhr) {
@@ -69,10 +69,10 @@ function stageBaked(scene) {
     function (gltf) {
       const model = gltf.scene;
 
-      console.log(model);
+      // console.log(model);
 
-      model.position.set(0, 0, 0);
-      model.scale.set(1, 1, 1);
+      model.position.set(0, -1000, 0);
+      model.scale.set(20, 20, 20);
       scene.add(model);
     },
     function (xhr) {

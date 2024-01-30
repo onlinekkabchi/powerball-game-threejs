@@ -31,11 +31,11 @@ const material2 = new THREE.MeshPhysicalMaterial({
 });
 
 const sphere = new THREE.Mesh(geometry1, material1);
-sphere.position.set(0, 2.5, 0);
-sphere.scale.set(0.13, 0.13, 0.13);
+sphere.position.set(50, 25, 0);
+sphere.scale.set(1, 1, 1);
 
 const sphere1 = new THREE.Mesh(geometry2, material2);
-sphere1.position.set(5, 2.5, 0);
-sphere1.scale.set(0.12, 0.12, 0.12);
+sphere1.position.set(90, 25, 0);
+sphere1.scale.set(1, 1, 1);
 
 export { sphere, sphere1 };

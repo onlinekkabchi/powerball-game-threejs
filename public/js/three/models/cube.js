@@ -4,9 +4,9 @@ const geometry = new THREE.BoxGeometry(1, 1, 1);
 
 // const material1 = new THREE.MeshBasicMaterial({ color: 0xffffff });
 const material1 = new THREE.MeshStandardMaterial({
-  emissive: 0xffffee,
+  emissive: 0xff0000,
   emissiveIntensity: 1,
-  color: 0xffffff,
+  color: 0xff0000,
 });
 // const material2 = new THREE.MeshBasicMaterial({ color: 0x00ffff });
 const material2 = new THREE.MeshPhysicalMaterial({
@@ -29,10 +29,10 @@ const cube1 = new THREE.Mesh(geometry, material1);
 const cube2 = new THREE.Mesh(geometry, material2);
 const stageFlag = new THREE.Mesh(geometry, material3);
 
-cube1.position.set(0, 13, 0);
-cube1.scale.set(1, 1, 1);
-cube2.position.set(0, 8, 0); // 텍스쳐 테스트중
-cube2.scale.set(1, 1, 1);
+cube1.position.set(0, 50, 0);
+cube1.scale.set(10, 10, 10);
+cube2.position.set(0, 100, 0); // 텍스쳐 테스트중
+cube2.scale.set(10, 10, 10);
 stageFlag.position.set(0, 10, 0);
 stageFlag.scale.set(0.1, 0.1, 0.1);
 

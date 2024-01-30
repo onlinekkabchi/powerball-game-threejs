@@ -5,8 +5,17 @@ const light = {
   ambient: 0x404040,
   directional: 0xffffff, // 0xd5deff
   bulb: 0xec9006,
-  hemiSky: 0xffffff,
-  heimGround: 0xc9f6ff,
+  lightSkyblue: 0xd8f9ff,
+  skyblue: 0xb1f2ff,
+  lightBlue: 0x63e5ff,
+  veryLightYellow: 0xffffcc,
+  lightYellow: 0xffff56,
+  yellow1: 0xffe736,
+  yellow2: 0xfecb00,
+  green: 0x3cb043,
+  lime: 0xaef359,
+  mulberry: 0xc64b8c, // 0xc64b8c Mulberry, 0xde73ff helio
+  helio: 0xc9f6ff,
 };
 
 // 빛 강도
@@ -24,22 +33,29 @@ const light = {
 //   "direct sun": 50000,
 // };
 
-const ambientLight = new THREE.AmbientLight(light.ambient);
+const ambientLight = new THREE.AmbientLight(light.directional);
+ambientLight.position.set(0, 200, 0);
+ambientLight.scale.set(100, 50, 100);
+ambientLight.intensity = 5;
 
 // 전체 광
 const dirLight = new THREE.DirectionalLight(light.directional);
-dirLight.position.set(0, 200, 0);
-dirLight.intensity = 1;
+dirLight.position.set(0, 250, 0);
+dirLight.scale.set(100, 50, 100);
+dirLight.intensity = 0.05;
 
-const dirLightHelper = new THREE.DirectionalLightHelper(dirLight, 3);
+const dirLightHelper = new THREE.DirectionalLightHelper(dirLight, 10);
 
 // 반사광
-const hemiLight = new THREE.HemisphereLight(light.hemiSky, light.heimGround, 1);
-hemiLight.position.set(0, 10, 0);
-hemiLight.scale.set(10, 10, 10);
-// hemiLight.intensity = hemiLuminousIrradiances["living room"];
+const hemiLight = new THREE.HemisphereLight(
+  light.directional,
+  light.directional,
+  1
+);
+hemiLight.position.set(0, 50, 0);
+hemiLight.scale.set(100, 50, 100);
 hemiLight.intensity = 10;
 
-const hemiLightHelper = new THREE.HemisphereLightHelper(hemiLight, 5);
+const hemiLightHelper = new THREE.HemisphereLightHelper(hemiLight, 3);
 
 export { ambientLight, dirLight, hemiLight, dirLightHelper, hemiLightHelper };

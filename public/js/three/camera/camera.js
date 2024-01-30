@@ -5,17 +5,18 @@ const width = window.innerWidth;
 const height = window.innerHeight;
 
 // 카메라 세팅
-const camera = new THREE.PerspectiveCamera(100, width / height, 1, 150);
+// const camera = new THREE.PerspectiveCamera(100, width / height, 1, 150);
 
-// const camera = new THREE.OrthographicCamera(
-//   width / -2,
-//   width / 2,
-//   height / 2,
-//   height / -2,
-//   1,
-//   50 // 카메라 거리
-// );
-camera.position.set(0, 1, 11);
+const camera = new THREE.OrthographicCamera(
+  width / -2,
+  width / 2,
+  height / 2,
+  height / -2,
+  -1000,
+  1000 // 카메라 거리
+);
+camera.position.set(0, 10, 50);
+// camera.lookAt(0, 0, 0);
 
 // 카메라 궤도 컨트롤러
 function orbitController(camera, renderer) {
@@ -28,7 +29,7 @@ function orbitController(camera, renderer) {
   // 줌 비활성화
   // controls.enableZoom = false;
   // 회전 비활성화
-  // controls.enableRotate = false;
+  controls.enableRotate = false;
   controls.update();
 }
 

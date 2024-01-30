@@ -9,8 +9,8 @@ async function lottery(path, gscene) {
   const file = await gltfLoader.loadAsync(path);
 
   const model = file.scene;
+  console.log("lottery machine");
   console.log(model);
-  console.log(model.children[17]);
 
   model.position.set(0, -5, 0);
   model.scale.set(20, 20, 20);
@@ -30,4 +30,4 @@ async function objLottery(scene) {
     };
 }
 
-export { objLottery };
+export { lottery, objLottery };

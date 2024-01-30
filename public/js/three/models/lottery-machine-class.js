@@ -15,9 +15,6 @@ const glass1 = new THREE.MeshPhysicalMaterial({
   color: 0xccddff,
   metalness: 0,
   roughness: 0,
-  // refractionRatio: 0.98,
-  //   reflectivity: 0.9,
-  transmission: options.transmission,
 });
 
 const normalMapPath = "../../../static/texture/Window_Lighting_01.jpeg";
@@ -113,15 +110,17 @@ export default class Lottery {
     // console.log(this.model.children[4]);
 
     // 로터리 머신 애니메이션
-    this.mixer = new THREE.AnimationMixer(this.model);
+    // this.mixer = new THREE.AnimationMixer(this.model);
     // this.mixer.clipAction(file.animations[0]).play();
 
     // 유리 씌우기
-    const dom = this.model.children[4];
-    dom.material = glass1;
+    const dom = this.model.children[2];
+    dom.material = glasstransparent;
+    const terrein = this.model.children[3];
+    terrein.material = glasstransparent;
 
-    this.model.position.set(0, -5, 0);
-    this.model.scale.set(20, 20, 20);
+    this.model.position.set(0, 27, 0);
+    this.model.scale.set(7, 7, 7);
 
     this.scene.add(this.model);
   }
